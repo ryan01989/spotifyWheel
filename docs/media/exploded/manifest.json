@@ -1,0 +1,326 @@
+{
+ "width": 1200,
+ "height": 1560,
+ "layers": [
+  {
+   "name": "bracket",
+   "level": "L4",
+   "collapse": [
+    0.0,
+    -311.4
+   ],
+   "base": {
+    "src": "bracket.webp",
+    "x": 454,
+    "y": 1254,
+    "w": 302,
+    "h": 202
+   }
+  },
+  {
+   "name": "shell",
+   "level": "L3",
+   "collapse": [
+    0.0,
+    -212.6
+   ],
+   "base": {
+    "src": "shell.webp",
+    "x": 298,
+    "y": 1006,
+    "w": 604,
+    "h": 427
+   }
+  },
+  {
+   "name": "ring",
+   "level": "L3",
+   "collapse": [
+    0.0,
+    -65.9
+   ],
+   "base": {
+    "src": "ring.webp",
+    "x": 390,
+    "y": 955,
+    "w": 421,
+    "h": 249
+   },
+   "overlay": {
+    "src": "ring_over.webp",
+    "x": 390,
+    "y": 1005,
+    "w": 420,
+    "h": 107
+   }
+  },
+  {
+   "name": "bearing",
+   "level": "L3",
+   "collapse": [
+    0.0,
+    -130.5
+   ],
+   "base": {
+    "src": "bearing.webp",
+    "x": 314,
+    "y": 963,
+    "w": 572,
+    "h": 364
+   }
+  },
+  {
+   "name": "hall",
+   "level": "L2",
+   "collapse": [
+    -1.9,
+    79.5
+   ],
+   "base": {
+    "src": "hall.webp",
+    "x": 681,
+    "y": 748,
+    "w": 97,
+    "h": 85
+   }
+  },
+  {
+   "name": "gear",
+   "level": "L2",
+   "collapse": [
+    47.4,
+    74.4
+   ],
+   "base": {
+    "src": "gear.webp",
+    "x": 423,
+    "y": 812,
+    "w": 81,
+    "h": 92
+   },
+   "overlay": {
+    "src": "gear_over.webp",
+    "x": 424,
+    "y": 848,
+    "w": 80,
+    "h": 56
+   }
+  },
+  {
+   "name": "scr_standoff",
+   "level": "L2",
+   "collapse": [
+    0.0,
+    -60.2
+   ],
+   "base": {
+    "src": "scr_standoff.webp",
+    "x": 382,
+    "y": 910,
+    "w": 433,
+    "h": 254
+   }
+  },
+  {
+   "name": "plate",
+   "level": "L2",
+   "collapse": [
+    0.0,
+    -0.0
+   ],
+   "base": {
+    "src": "plate.webp",
+    "x": 341,
+    "y": 839,
+    "w": 517,
+    "h": 277
+   }
+  },
+  {
+   "name": "inserts",
+   "level": "L2",
+   "collapse": [
+    0.0,
+    30.8
+   ],
+   "base": {
+    "src": "inserts.webp",
+    "x": 451,
+    "y": 900,
+    "w": 332,
+    "h": 143
+   }
+  },
+  {
+   "name": "motor",
+   "level": "L2",
+   "collapse": [
+    0.6,
+    57.8
+   ],
+   "base": {
+    "src": "motor.webp",
+    "x": 495,
+    "y": 858,
+    "w": 138,
+    "h": 99
+   }
+  },
+  {
+   "name": "holder",
+   "level": "L2",
+   "collapse": [
+    0.7,
+    103.1
+   ],
+   "base": {
+    "src": "holder.webp",
+    "x": 487,
+    "y": 809,
+    "w": 132,
+    "h": 78
+   }
+  },
+  {
+   "name": "scr_holder",
+   "level": "L2",
+   "collapse": [
+    1.3,
+    144.6
+   ],
+   "base": {
+    "src": "scr_holder.webp",
+    "x": 506,
+    "y": 766,
+    "w": 91,
+    "h": 78
+   }
+  },
+  {
+   "name": "pi",
+   "level": "L2",
+   "collapse": [
+    -0.9,
+    66.2
+   ],
+   "base": {
+    "src": "pi.webp",
+    "x": 547,
+    "y": 861,
+    "w": 246,
+    "h": 138
+   }
+  },
+  {
+   "name": "tb",
+   "level": "L2",
+   "collapse": [
+    1.6,
+    66.5
+   ],
+   "base": {
+    "src": "tb.webp",
+    "x": 410,
+    "y": 905,
+    "w": 125,
+    "h": 66
+   }
+  },
+  {
+   "name": "standoffs",
+   "level": "L2",
+   "collapse": [
+    0.0,
+    155.3
+   ],
+   "base": {
+    "src": "standoffs.webp",
+    "x": 374,
+    "y": 661,
+    "w": 448,
+    "h": 251
+   }
+  },
+  {
+   "name": "scr_boards",
+   "level": "L2",
+   "collapse": [
+    -0.2,
+    104.9
+   ],
+   "base": {
+    "src": "scr_boards.webp",
+    "x": 446,
+    "y": 818,
+    "w": 342,
+    "h": 151
+   }
+  },
+  {
+   "name": "display",
+   "level": "L1",
+   "collapse": [
+    0.0,
+    321.5
+   ],
+   "base": {
+    "src": "display.webp",
+    "x": 335,
+    "y": 479,
+    "w": 530,
+    "h": 220
+   },
+   "base_on": {
+    "src": "display_on.webp",
+    "x": 335,
+    "y": 479,
+    "w": 530,
+    "h": 220
+   }
+  },
+  {
+   "name": "magnets",
+   "level": "L0",
+   "collapse": [
+    0.0,
+    568.3
+   ],
+   "base": {
+    "src": "magnets.webp",
+    "x": 339,
+    "y": 282,
+    "w": 521,
+    "h": 192
+   },
+   "overlay": {
+    "src": "magnets_over.webp",
+    "x": 396,
+    "y": 282,
+    "w": 418,
+    "h": 50
+   }
+  },
+  {
+   "name": "wheel",
+   "level": "L0",
+   "collapse": [
+    0.0,
+    573.5
+   ],
+   "base": {
+    "src": "wheel.webp",
+    "x": 247,
+    "y": 208,
+    "w": 706,
+    "h": 299
+   }
+  }
+ ],
+ "assembled": {
+  "src": "assembled.webp",
+  "x": 282,
+  "y": 746,
+  "w": 636,
+  "h": 462
+ }
+}

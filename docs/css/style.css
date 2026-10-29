@@ -1,0 +1,148 @@
+:root {
+    --red: #F6CABF;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Header */
+.site-header {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.site-header hgroup {
+    margin: 0;
+}
+/* Header: text left, video right */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+/* Frame around the video, using Pico's card look */
+.hero-media {
+    margin: 0;
+    padding: 0.5rem;
+    background: var(--pico-card-background-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: calc(var(--pico-border-radius) * 2);
+    box-shadow: var(--pico-card-box-shadow);
+}
+
+.hero-media video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--pico-border-radius);
+}
+
+.hero-media figcaption {
+    padding: 0.5rem 0.25rem 0.25rem;
+    font-size: 0.85rem;
+    color: var(--pico-muted-color);
+}
+
+/* Phones: stack text above video */
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Content + right-hand nav */
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(12rem, 30%, 18rem);
+    gap: 3rem;
+    align-items: start;
+    padding-top: 2rem;
+}
+
+main section {
+    scroll-margin-top: 2rem;
+}
+
+.toc {
+    position: sticky;
+    top: 2rem;
+}
+
+/* Exploded view under the nav links. The view is ~0.54 as wide as it is
+   tall, so cap its width by the height left under the nav (~19rem) to keep
+   the whole sticky sidebar inside the window. */
+.toc .sw-exploded {
+    width: min(100%, calc((100vh - 19rem) * 0.54));
+    margin: 1.5rem auto 0;
+}
+
+.toc-title {
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--pico-muted-color);
+}
+
+.toc ul {
+    padding: 0;
+    border-left: 2px solid var(--pico-muted-border-color);
+}
+
+.toc li {
+    list-style: none;
+    padding: 0;
+}
+
+.toc a {
+    margin-left: -2px;
+    padding: 0.25rem 0 0.25rem 1rem;
+    border-left: 2px solid transparent;
+    font-size: 0.9rem;
+    color: var(--pico-muted-color);
+    text-decoration: none;
+}
+
+.toc a:hover,
+.toc a.active {
+    color: var(--pico-color);
+}
+
+.toc a.active {
+    border-left-color: var(--red);
+}
+
+/* Footer */
+.site-footer {
+    margin-top: 4rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--pico-muted-border-color);
+}
+
+.site-footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: var(--pico-muted-color);
+}
+
+/* Phones: drop the side nav, content goes full width */
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toc {
+        display: none;
+    }
+}

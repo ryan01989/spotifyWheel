@@ -1,0 +1,88 @@
+/* SpotifyWheel exploded view (works with Pico's light and dark themes: every image is transparent) */
+.sw-exploded {
+  margin: 0;
+  --sw-speed: 700ms;                                  /* part moves between highlights */
+  --sw-ease: cubic-bezier(0.45, 0, 0.2, 1);
+  --sw-asm-speed: 1200ms;                             /* exploded <-> assembled (whole dissolve) */
+  --sw-asm-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --sw-ghost-opacity: 0.18;
+  --sw-glow: rgba(255, 255, 255, 0.55);
+  /* dimmed parts stay opaque (so overlaps stay correct) and fade toward the page colour */
+  --sw-dim: grayscale(1) contrast(0.3) brightness(1.5) blur(1.2px);      /* light pages */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sw-exploded { --sw-dim: grayscale(1) brightness(0.3) contrast(0.9) blur(1.2px); --sw-glow: rgba(255,255,255,.35); }
+}
+[data-theme="dark"] .sw-exploded { --sw-dim: grayscale(1) brightness(0.3) contrast(0.9) blur(1.2px); --sw-glow: rgba(255,255,255,.35); }
+[data-theme="light"] .sw-exploded { --sw-glow: rgba(0, 0, 0, 0.25); }
+.sw-exploded.sw-sticky { position: sticky; top: var(--sw-top, 2rem); }
+.sw-exploded > img { width: 100%; height: auto; display: block; }        /* no-JS / loading fallback */
+
+.sw-stage { position: relative; width: 100%; }
+.sw-stage img {
+  position: absolute; height: auto; max-width: none;
+  pointer-events: none; user-select: none;
+  will-change: transform, opacity;
+}
+/* exploded states: layers glide between highlights; opacity is instant so nothing goes see-through */
+.sw-layer {
+  transition: transform var(--sw-speed) var(--sw-ease), filter 450ms ease, opacity 450ms ease;
+}
+
+/* roles set by exploded.js */
+.sw-layer[data-role="dim"]       { filter: var(--sw-dim); }
+.sw-layer[data-role="secondary"] { filter: none; }
+.sw-layer[data-role="primary"]   { filter: none; }
+.sw-layer[data-role="ghost"]     { filter: var(--sw-dim); opacity: var(--sw-ghost-opacity); }
+.sw-layer[data-lift]             { filter: drop-shadow(0 0 8px var(--sw-glow)); }
+.sw-overlay[data-lift]           { filter: none; }
+
+/* display: the "screen on" image crossfades over the black screen */
+.sw-screen-on { opacity: 0 !important; }
+.sw-exploded.is-screen-on:not(.is-assembled) .sw-screen-on:not([data-role="dim"]):not([data-role="ghost"]) { opacity: 1 !important; }
+
+/* exploded <-> assembled is a two-step dissolve: the whole exploded picture fades out (as one group, so
+   parts never turn see-through against each other) while drawing together, and only then does the
+   assembled device fade up. Leaving runs the same two steps in reverse. */
+.sw-parts { position: absolute; inset: 0; opacity: 1; }
+.sw-assembled { opacity: 0; transform: scale(0.97); transform-origin: 50% 50%; }
+
+.sw-exploded.is-assembled .sw-parts {
+  opacity: 0; transition: opacity calc(var(--sw-asm-speed) * 0.45) ease-in calc(var(--sw-asm-speed) * 0.1);
+}
+.sw-exploded.is-assembled .sw-layer {
+  filter: none;
+  transition: transform calc(var(--sw-asm-speed) * 0.6) cubic-bezier(0.5, 0, 0.75, 0), filter 300ms ease;
+}
+.sw-exploded.is-assembled .sw-assembled {
+  opacity: 1; transform: none;
+  transition: opacity calc(var(--sw-asm-speed) * 0.45) ease-out calc(var(--sw-asm-speed) * 0.6),
+              transform calc(var(--sw-asm-speed) * 0.6) cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--sw-asm-speed) * 0.6);
+}
+
+.sw-exploded:not(.is-assembled) .sw-assembled {
+  transition: opacity calc(var(--sw-asm-speed) * 0.35) ease-in, transform calc(var(--sw-asm-speed) * 0.35) ease-in;
+}
+.sw-exploded:not(.is-assembled) .sw-parts {
+  transition: opacity calc(var(--sw-asm-speed) * 0.5) ease-out calc(var(--sw-asm-speed) * 0.4);
+}
+.sw-exploded.sw-leaving .sw-layer {
+  transition: transform calc(var(--sw-asm-speed) * 0.8) cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--sw-asm-speed) * 0.35),
+              filter 500ms ease calc(var(--sw-asm-speed) * 0.4), opacity 1ms;
+}
+
+.sw-exploded figcaption {
+  text-align: center; font-size: 0.875rem; line-height: 1.35; min-height: 2.7em; text-wrap: balance;
+  color: var(--pico-muted-color, #888);
+  transition: opacity 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-stage img, .sw-exploded.is-assembled .sw-layer, .sw-exploded.sw-leaving .sw-layer {
+    transition: opacity 250ms ease, filter 250ms ease !important; transform: none !important;
+  }
+  .sw-assembled, .sw-exploded.is-assembled .sw-assembled, .sw-parts,
+  .sw-exploded.is-assembled .sw-parts, .sw-exploded:not(.is-assembled) .sw-parts {
+    transition: opacity 300ms ease !important; transform: none !important;
+  }
+}
