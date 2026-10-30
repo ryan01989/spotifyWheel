@@ -23,7 +23,7 @@
                           caption: 'Display, Pi Zero 2 W and TB6612' },
     'hardware':         { mode: 'focus', primary: ['pi', 'tb'], lift: ['pi', 'tb'],
                           secondary: ['motor', 'gear', 'bearing', 'magnets', 'display'],
-                          caption: 'Pi Zero 2 W, TB6612 and the parts they drive' },
+                          caption: 'Pi Zero 2 W, TB6612, N20 DC motor and the parts they drive' },
     'what-went-wrong':  { mode: 'assembled' },
     'make-it-yourself': { mode: 'assembled' },
   };
