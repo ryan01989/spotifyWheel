@@ -71,6 +71,50 @@ main section {
     scroll-margin-top: 2rem;
 }
 
+/* Photo rows inside sections, laid out by Pico's .grid. Tiles are cropped
+   to one shape so a row lines up; .wide is for the landscape renders. */
+.gallery {
+    margin-bottom: var(--pico-spacing);
+}
+
+.gallery figure,
+figure.gallery {
+    margin: 0;
+}
+
+.gallery img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--pico-border-radius);
+}
+
+.gallery.wide img {
+    aspect-ratio: 3 / 2;
+}
+
+.gallery figcaption {
+    padding-top: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--pico-muted-color);
+}
+
+/* Text beside a single photo, photo gets the narrower column */
+@media (min-width: 768px) {
+    .grid.split {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+}
+
+/* Phones: Pico stacks .grid to one column; keep photos two across */
+@media (max-width: 767px) {
+    .grid.gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 .toc {
     position: sticky;
     top: 2rem;

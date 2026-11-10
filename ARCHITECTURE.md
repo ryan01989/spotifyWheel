@@ -1,9 +1,4 @@
 # Architecture
-
-UML views of the current system, as Mermaid. They render on GitHub; in VS Code
-they need a Mermaid-capable Markdown preview extension. The rationale behind the
-design is in [`CLAUDE.md`](CLAUDE.md); this file just shows the structure.
-
 1. [Deployment](#1-deployment): what runs where
 2. [Backend modules](#2-backend-modules): the Python packages and how they depend on each other
 3. [Frontend components](#3-frontend-components): the React tree, hooks and HTTP calls
