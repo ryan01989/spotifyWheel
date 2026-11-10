@@ -34,12 +34,37 @@
                 </section>
                 <section id="how-it-works">
                     <h2>How It Works</h2>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repudiandae facere, nam eaque, accusamus blanditiis enim, deleniti sequi modi laborum natus quas deserunt totam! Officia omnis deserunt similique quis facere iste sit exercitationem, asperiores dolorum repellat itaque numquam, excepturi porro. Dignissimos praesentium, pariatur error, alias fuga sequi velit tenetur corrupti eaque voluptatum consectetur dicta temporibus quibusdam repellendus soluta, maiores ut repellat blanditiis aut corporis distinctio excepturi architecto? Repellat accusamus cumque minima magnam dolor sint unde, illo laudantium consequatur vero sequi amet, ipsa necessitatibus cum tenetur, ut quam fugit maxime voluptatibus ducimus laboriosam vel. Provident saepe ab quam veritatis deleniti, aperiam molestiae asperiores qui unde temporibus, voluptate eligendi. Illum atque quos molestiae molestias tempora iure deserunt laboriosam explicabo rem laudantium blanditiis quia vitae at, nobis amet, culpa inventore quis dolor, repellendus minus itaque velit consectetur odio. Placeat, libero! Veniam natus totam, vitae velit architecto explicabo tenetur quos quas amet, ratione sunt suscipit odit consequatur pariatur, iste accusamus reprehenderit. Laudantium suscipit a minima aliquid dolores, voluptatibus tempore ipsa perspiciatis, inventore dolor placeat ipsam sunt repellendus iure saepe temporibus magnam voluptatem dicta commodi sint iusto eum harum! A alias incidunt repellat sequi mollitia vero enim quidem aut nostrum amet dolorem itaque animi, aspernatur possimus?</p>
-                </section>
+                    <p>
+                        The main concept is simple: a stationary wall mounted display with an outer enclosure that spins while music plays. This seperates the build into 2 main components - the inner display and electonics, and the outer spinning encoder wheel.
+                    </p>
+                    <p>
+                        The application polls Spotify to detect if the associated account is playing music. If so it displays current information about the song playing, and starts the motor to spin along with the music.
+                        If the user resists the motor movement, the wheel will stop. This allows the user to turn the wheel to change the volume. After a short while the wheel will resume playing. The user can also pause, play,
+                        skip, go back, and change the playback duration.
+                    </p>
+                    <p>
+                        Two SS41F Hall-effect sensors and a ring of magnets in the outer frame come together to form an encoder. This encoder has to be calibrated when the user turns on the device, and is capable of detecting relative speed and position.
+                    </p>
+                    <p> The motor is driven through a DC N20 motor using a TB6612 motor driver. The motor frequency was tuned via PWM to reduce whine. N20s often come with encoders preinstalled, so you may be wondering why I installed the encoder system above. Well,
+                        DC motors only sense motion when the motor is on, which would prevent the ability to sense motion when the user spins the wheel manually.
+                    </p>
+                    </section>
                 <section id="build">
                     <h2>Build Process</h2>
-                    <h3></h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum eaque vitae ea dicta quibusdam natus officiis quis consectetur accusamus vel molestiae mollitia minima blanditiis obcaecati, nesciunt placeat aut sit quas possimus. Est autem, recusandae perspiciatis iste odio quam consectetur voluptatum ratione placeat, voluptates quisquam, similique quas et. Deserunt nobis recusandae rem at labore autem esse nulla et veniam quod totam doloribus possimus excepturi tempora nesciunt officiis ipsam soluta quae, doloremque consectetur, molestiae unde natus. Asperiores, ullam placeat voluptates animi sunt aliquid ex dolore nulla quidem quasi fugit eius hic illum veritatis deleniti deserunt laudantium! Mollitia velit quas sed veniam eveniet optio, voluptatem eaque provident dignissimos deleniti doloribus temporibus labore voluptas hic qui fugit voluptatibus ipsam ullam placeat earum architecto aspernatur excepturi ea maxime! Totam quas aperiam adipisci recusandae consequuntur laudantium molestias iusto voluptatem facere, illum distinctio accusamus autem iure, tenetur quaerat dignissimos culpa sapiente voluptates facilis animi deserunt sequi velit? Vitae exercitationem, nihil cupiditate unde facilis quibusdam. Recusandae modi officiis minima rem est dolores voluptas tempore eaque deserunt, minus sapiente quisquam laborum, aliquam quo nesciunt pariatur fugiat ea, sequi quibusdam accusamus! Molestiae voluptate dolorem necessitatibus quis ipsam, delectus cum sapiente quidem id, dolores ab dicta dolor vero illo? Assumenda, minus?</p>
+                    <p>This section provides a high-level overview of my design and build process. If you want a more in-depth look at the internals, please see the <a href="#software">Software</a> and <a href="#hardware">Hardware</a> sections.
+                    </p>
+                    <p>
+                        I made many changes throughout the build process, some drastic and many small refinement. Here are a couple select changes:
+                        <ul>
+                            <li>I swapped out a Raspberry Pi 5 for a Raspberry Pi Zero 2 W. More on this in <a href=#what-went-wrong">what went wrong</a>. This reduced my distance off the wall by 20mm as I was able to 
+                            fit the Pi alongside the motor instead of overtop. Although this was better for the physical design, it highly constained my compute (512 MB), forcing me to be more careful with my software design.</li>
+                            <li>Changing the locking modular outer casing (as seen in initial outer casing) to a simple press fit two piece design. This reduced printing hours, tolerance needs, and complexity where it was needed. I also swapped the top design to a more sleek spiral.</li>
+                            <li>Switching from a 1:1 bevel gear and pinion design to a 3:1 bevel gear. This reduced the risk of print errors with the small teeth on the outer gear, and minimized the amount of moving parts with the potential to fail.</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <i>Small Note: </i> This project is a continuation of an effort by a classmate of mine, Adam Rehan, and I, to recreate the fabled yet discontinued <a href = "https://en.wikipedia.org/wiki/Car_Thing" target="_blank">Spotify Car Thing</a> (don't listen to the wikipedia this thing has a cult following). An intitial 3D-model for our enclosure is included below.
+                    </p>
                     <article class="grid gallery">
                         <figure>
                             <img src="media/progress/initial%20designs/mock_car_thing.jpeg" alt="Early mock-up based on Spotify's Car Thing" loading="lazy">
@@ -119,7 +144,50 @@
                 </section>
                 <section id = "hardware">
                     <h2>Hardware</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, aliquam pariatur! Voluptate excepturi in nobis veritatis maiores? Libero vel dolor exercitationem delectus dicta labore quo, deserunt rem molestias iusto sunt possimus nulla accusamus molestiae! Fugit, necessitatibus inventore laboriosam dolorum eos, repellat harum asperiores, facilis atque veritatis aliquid suscipit iusto dolor recusandae deserunt! Dolores aspernatur cum hic eos, incidunt sit corporis labore temporibus aperiam iure praesentium quibusdam saepe consectetur quis veritatis nisi earum, id maxime, beatae possimus! Architecto eos consequuntur repudiandae, soluta nisi quasi alias natus nihil, tenetur aperiam eaque fugit, dolorum eum odio possimus expedita! Asperiores culpa sit consectetur error iure doloribus quaerat, tempore voluptatum alias similique quis at a possimus cum nam molestias cupiditate repellat voluptate, reprehenderit hic ab nulla atque beatae odit. Unde, non dolorum debitis nesciunt sed possimus, recusandae iste autem mollitia maiores repellendus quaerat accusantium tenetur vel tempore! Aut assumenda, dolores labore id inventore ab perferendis sed in temporibus saepe, dicta voluptatibus ex ipsum aspernatur soluta similique nemo impedit quo laborum optio non fugiat. Corrupti dicta debitis, fuga iusto non culpa vel voluptatum id. Commodi dicta quae fuga quasi amet vitae deleniti maiores illo libero natus. Aspernatur veniam beatae, ratione unde hic expedita excepturi fuga facilis.</p>
+                    <p>
+                        The hardware has two main components: A <a href="https://kcmicromotor.com/n20-motor-dimensions-specifications/" target="_blank">N20 DC motor</a> that spins the outer wheel, and 2 <a href="https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/ja/products/sensors/magnetic-sensors/bipolar-position-sensor-ics/common/documents/sps-siot-bipolar-digital-hall-effect-sensor-ic-installation-instructions-ss41-pk87881-6-en-ciid-50342.pdf" target="_blank">SS41F Bipolar Hall-effect</a>
+                        sensors tracking 16 Ø10x2 mm magnets nested inside the outer wheel. 
+                    </p>
+                    <div class="grid split">
+                        <p>
+                            The biggest concern when designing the hardware components was minimizing the distance the display stoof off the wall.
+                            This was an interesting Engineering problem as while worrying about how to spin the wheel in a reliable way I had to worry
+                            about supporting the display and enclosing the rest of the electronics in as tight a space as possible. Inititally I planned
+                            to have a motor on the center axis with support for the display coming through the middle of the motor as pictured to the right.
+                        </p>
+                        <figure>
+                            <img src="media/progress/initial designs/Center_axis_motor.png" alt="Center Axis Motor" loading="lazy">
+                            <figcaption>Rough sketch of center axis motor design</figcaption>
+                        </figure>
+                    </div>
+                    <p>The issue with this design is finding the motor to support it. This requires something like a brushless DC motor with a hollow center,
+                            which are hard to come by and <strong>expensive</strong>. I did not have the budget to support this, but I suggest it for future creators
+                            as it simplifies the design and removes points for potential failure (no need for bevel gears). It also avoids the Back-EMF created by turning a geared DC motor manually,
+                            although this isn't a huge problem due to the size of the motor.
+                        </p>
+                    <p>To minimize space off the wall I ended up with an N20 motor mounted on the radial axis of the wheel. The motor connects to the outer wheel with a 3:1 bevel gear. 
+                        The motors output a maximum of 300 rpm, which means at a 3:1 ratio the outer wheel can spin at a maximium of 100 rpm (I usually leave it at 40 rpm, much lower than the limit).
+                        These little N20s produce a surprising amount of torque - 0.4 kg·cm - which is more than enough to spin the light PLA outer frame. Its important to ensure that the spin speed
+                        is well over the stall zone to prevent burning out the motor, I measured this to be around 35% of motor power (~4.2V), but its important you test this metric yourself.
+                        The gears were printed in SLA. SLA offers a higher degree of precision than PLA, it's also tougher and more durable. Its often more expensive if you dont have your own SLA printer,
+                        but its important in order to prevent wear on the gear teeth over heavy use.
+                    </p>
+                    <p>
+                        The motor is driven through a TB6612. The TB6612 offered a couple advantages.
+                        <ul>
+                            <li>It matches the power ratings needed by N20s</li>
+                            <li>It supports 3.3V input (Raspberry Pi's native output)</li>
+                            <li>A seperate PWM pin to push frequency easily</li>
+                            <li>Its cheap and easy to find</li>
+                        </ul>
+                        Most helpful to my use case was that the TB6612 supports two channels, i.e. the board has logic for 2 motors at once. This comes in handy when you short one channel of the
+                        driver during initial testing (<a href="#shorting-my-motor-driver">hypothetically of course</a>). It also allows you to refine your PWM setting and hence motor frequency through the software, which makes it easy
+                        to reduce motor whine and create a quieter product.
+                    </p>
+                    <p>Everything was soldered by hand, which I would not recommend for future creators. This was meant to be a prototype and as such creating a PCB didn't seem in my best interest. I wanted to preserve
+                        the ability to modify the design as I went, I figured I would realize some of my initial assumptions didnt hold and that I would have to make changes. This made the wiring harder and messy (as seen below).
+                        It works for my use case, but it isn't a scalable product as is. 
+                    </p>
                     <article class="grid gallery">
                         <figure>
                             <img src="media/progress/motor_test_rasp_pi_5.jpeg" alt="Motor test running on a Raspberry Pi 5" loading="lazy">
@@ -127,7 +195,7 @@
                         </figure>
                         <figure>
                             <img src="media/progress/motor_wiring.jpeg" alt="Motor driver wiring" loading="lazy">
-                            <figcaption>Motor wiring</figcaption>
+                            <figcaption>Partial Motor wiring</figcaption>
                         </figure>
                         <figure>
                             <img src="media/progress/ss41f_wired.jpeg" alt="SS41Fs wired up" loading="lazy">
@@ -208,6 +276,15 @@
                 }
             }, { rootMargin: "0px 0px -70% 0px" });
             document.querySelectorAll("main section[id]").forEach((s) => observer.observe(s));
+
+            // Photos: click opens the full image in a new tab (hover zoom is in style.css)
+            document.querySelectorAll("main img").forEach((img) => {
+                img.classList.add("zoomable");
+                img.title = "Click to open full size";
+                img.addEventListener("click", () => {
+                    window.open(img.currentSrc || img.src, "_blank", "noopener");
+                });
+            });
         </script>
     </body>
 </html>

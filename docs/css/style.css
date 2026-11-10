@@ -6,6 +6,9 @@ html {
     scroll-behavior: smooth;
 }
 
+p {
+    text-indent: 1em;
+}
 /* Header */
 .site-header {
     padding: 3rem 0 2rem;
@@ -98,6 +101,21 @@ figure.gallery {
     padding-top: 0.35rem;
     font-size: 0.85rem;
     color: var(--pico-muted-color);
+}
+
+/* Photos: grow 1.5x on hover; click opens full size (script in index.html) */
+img.zoomable {
+    position: relative;
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (hover: hover) {
+    img.zoomable:hover {
+        z-index: 10;
+        transform: scale(1.5);
+        box-shadow: var(--pico-card-box-shadow);
+    }
 }
 
 /* Text beside a single photo, photo gets the narrower column */
