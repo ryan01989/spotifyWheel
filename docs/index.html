@@ -48,11 +48,32 @@
                     <p> The motor is driven through a DC N20 motor using a TB6612 motor driver. The motor frequency was tuned via PWM to reduce whine. N20s often come with encoders preinstalled, so you may be wondering why I installed the encoder system above. Well,
                         DC motors only sense motion when the motor is on, which would prevent the ability to sense motion when the user spins the wheel manually.
                     </p>
+                    <p> The wheel is powered through 2 cords fed through the wall. One is a 12V input for the motor, the other is a 5V Usb-C cord to power the PI. Future creators could optimize this down to one single cord, but I didn't want to risk bricking my Raspberry Pi
+                        by overpowering it with 12V in the late stage of the project.
+                    </p>
                     </section>
                 <section id="build">
                     <h2>Build Process</h2>
                     <p>This section provides a high-level overview of my design and build process. If you want a more in-depth look at the internals, please see the <a href="#software">Software</a> and <a href="#hardware">Hardware</a> sections.
                     </p>
+                    <p>
+                        All 3D modelling was done by me, either in SolidWorks or Shapr3d (an IPad compatable software). Interfacing parts were connected with a press fit when possible, with a 0.2mm gap for print fault tolerance.
+                        This minimized the amount of assembly parts. This was not possible with electronics, where instead heat inserts were used to provide durable metal screw threads on the inner plates. It was imperative to keep
+                        all screw mates internal in order to achieve a cleanly finished product. <strong>All 3D models are available on the project GitHub.</strong>
+                    </p>
+                    <div class="grid split">
+                        <p>
+                            Most of the iteration I had to do with the 3Dmodel was making room for wiring connections (not pictured in 3Dmodels). It was difficult to find minimal cords (i.e. no excess overhang on connectors) that could fit into the small internal 
+                            pocket. I opted for 90° cords when possible, and designed around them by providing negative space when it was not. On the right you can see one such cutout, where I couldnt find a minimal mini-HDMI cord and instead had to model around 
+                            the cord I could find. In another world I could have skipped this whole process by communicating between the display with I2C, SPI, or UART, but the display model I had access to did not provide interfaces for these forms of communication.
+                        </p>
+                        <article>
+                            <figure class="gallery">
+                                <img src="media/progress/cord_slot.png" alt="Cord slot" loading="lazy">
+                                <figcaption>Cutout for HDMI cord</figcaption>
+                            </figure>
+                        </article>
+                    </div>
                     <p>
                         I made many changes throughout the build process, some drastic and many small refinement. Here are a couple select changes:
                         <ul>
@@ -61,6 +82,11 @@
                             <li>Changing the locking modular outer casing (as seen in initial outer casing) to a simple press fit two piece design. This reduced printing hours, tolerance needs, and complexity where it was needed. I also swapped the top design to a more sleek spiral.</li>
                             <li>Switching from a 1:1 bevel gear and pinion design to a 3:1 bevel gear. This reduced the risk of print errors with the small teeth on the outer gear, and minimized the amount of moving parts with the potential to fail.</li>
                         </ul>
+                    </p>
+                    <p>
+                        After the build was finished, it was important to validate that the product was consistent. To do this, I implemented a sleep mode that enters the wheel into a low power mode after 30 minutes of no user input. 
+                        The wheel will wake back up when the user plays something on Spotify while on the same LAN as the Pi. This allowed me to leave the wheel running in the background of my day to day while monitoring for any bugs
+                        that presented themselves.
                     </p>
                     <p>
                         <i>Small Note: </i> This project is a continuation of an effort by a classmate of mine, Adam Rehan, and I, to recreate the fabled yet discontinued <a href = "https://en.wikipedia.org/wiki/Car_Thing" target="_blank">Spotify Car Thing</a> (don't listen to the wikipedia this thing has a cult following). An intitial 3D-model for our enclosure is included below.
@@ -155,10 +181,12 @@
                             about supporting the display and enclosing the rest of the electronics in as tight a space as possible. Inititally I planned
                             to have a motor on the center axis with support for the display coming through the middle of the motor as pictured to the right.
                         </p>
-                        <figure>
-                            <img src="media/progress/initial designs/Center_axis_motor.png" alt="Center Axis Motor" loading="lazy">
-                            <figcaption>Rough sketch of center axis motor design</figcaption>
-                        </figure>
+                        <article>
+                            <figure class="gallery">
+                                <img src="media/progress/initial designs/Center_axis_motor.png" alt="Center Axis Motor" loading="lazy" style="aspect-ratio: 10/6">
+                                <figcaption>Rough sketch of center axis motor design</figcaption>
+                            </figure>
+                        </article>
                     </div>
                     <p>The issue with this design is finding the motor to support it. This requires something like a brushless DC motor with a hollow center,
                             which are hard to come by and <strong>expensive</strong>. I did not have the budget to support this, but I suggest it for future creators
@@ -209,19 +237,62 @@
                 </section>
                 <section id="what-went-wrong">
                     <h2>What Went Wrong</h2>
+                    <p>
+                        As with any hobby project, plenty of mistakes had to happen before a working product was possible. Here are a couple,
+                        both to illustrate that development is an imperfect process and I am an imperfect creator.
+                    </p>
+                    <p>
+                        While I was initially working with a Raspberry Pi 5, I ended up bricking the entire computer during an initial motor test
+                        by overloading a GPIO pin with 12V. This was an extremely discouraging loss as the price of a Pi 5 had tripled since I originally
+                        bought it. Buying a new one would've brought the budget of this project to an unreasonable amount, forcing me to pivot to something
+                        cheaper - the Raspberry Pi Zero 2 W. This allowed me to keep the same linux Ubuntu operating system in a more compact module. 
+                        I was initially hesitatnt to make this switch as I worried about the memory load being too much for the small module, but after optimizing
+                        the software to account for the new constraint it ended up being a good pivot. As mentioned earlier, it allowed me to slim down the space off
+                        the wall by about 20 mm as I could tuck the Pi on the same plane as the motor instead of on top of it.
+                    </p>
                     <div class="grid split">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus beatae corporis consequatur? Libero inventore perspiciatis voluptatibus, nobis ipsum laborum ut nam quas commodi sint sit laudantium beatae quos, animi repellat exercitationem deleniti eius quia consequatur corrupti rem amet? Fuga vero voluptatem dolore, aperiam odit officiis sed, in tempore, esse obcaecati perspiciatis illo magnam praesentium eligendi. Ea vel quasi corrupti iste rerum soluta distinctio, voluptatem cumque sunt repudiandae, vitae iure consequatur voluptate, nobis harum nulla voluptates expedita facere mollitia? In, illo? Nesciunt sapiente architecto esse magnam totam repudiandae veniam! Libero suscipit vel nisi ea optio quia unde consequuntur mollitia excepturi magnam, maiores nam sunt ratione enim qui. Voluptatibus nemo qui, sunt saepe odio harum iure autem ut incidunt iusto placeat impedit porro! Nihil quasi architecto adipisci, cupiditate, aliquam culpa optio velit reprehenderit asperiores vitae accusantium ab aspernatur quibusdam, necessitatibus consequatur illum quo! Corporis nobis unde facere eaque quos aperiam dolore, quas inventore sed facilis, id vero delectus optio omnis animi nulla, reprehenderit expedita amet fugiat? Quos recusandae deserunt nihil quod impedit fugit ipsam ex laborum unde aspernatur necessitatibus sapiente ipsum eos soluta optio rem repellat quas in voluptate, a quo modi? Maiores tempora perspiciatis possimus, doloribus iusto pariatur autem totam saepe!</p>
+                        <p>
+                        The rest all came from getting trying to get the mechanics working. As these faults all happened during the same stage I like to think of this
+                        part of the project as the <strong>"no good very bad not fun"</strong> period. First, when trying to fine tune the start and stop mechanics I snapped the smaller
+                        bevel gear in half. This was clumsy of me, I was jerking the wheel with rapid start and stops which turned out to be too much for the poor gear.
+                        Sadly replacing this part was not as simple as printing another like some of the other components as I had the bevel gears specially printed in SLA. I no longer had
+                        access to the SLA printer I had originally used and was forced to get the replacement shipped to me (which took 2 weeks!). A bit impatiently I considered replacing 
+                        the gear with a PLA variant, even so far as I printed one out, but I decided not to use it as it risked breaking even more components.
+                        </p>
                         <article>
                             <figure class="gallery">
                                 <img src="media/progress/broken_gear.jpeg" alt="Broken gear" loading="lazy">
-                                <figcaption>Broken gear</figcaption>
+                                <figcaption>Broken Gear</figcaption>
                             </figure>
                         </article>
                     </div>
+                    <div class="grid split">
+                        <p>
+                            Next was the motor driver. During the same short that fried the Raspberry Pi 5 I shorted the TB6612 as well. Testing with a multimeter reavealed
+                            that the internal logic was being bypassed for a path of near 0 resistance: the driver was fried too. Luckily for me the TB6612 supports 2 motor inputs,
+                            A and B, as seen on the right. Although A was fried, testing revealed that B was still intact. I was able to successfully hotswap the inputs to the other 
+                            channel, but not without the worry of having to buy another driver first.
+                        </p>
+                        <article>
+                            <figure class="gallery">
+                                <img src="media/progress/TB6612_model.png" alt="TB6612 Diagram" loading="lazy">
+                                <figcaption>TB6612 Circuit Diagram via Adafruit</figcaption>
+                            </figure>
+                        </article>
+                    </div>
+                    <p>
+                        Everything great comes in threes, so I should have expected the last mechanical failure. When the N20s stall too long they overheat and burn out. During stress testing
+                        I let the Wheel run continously while I went to class, and low and behold I came back to a stalled, burned out motor. I'm not proud to admit I also burned a second motor something similar.
+                        To prevent this from happening in the future I added a failsafe in the software where if the motor has been turned on for more than 3 seconds without any detected encoder movement 
+                        the motor stops immediately. So far this has solved the burn out problem.
+                    </p>
                 </section>
                 <section id="make-it-yourself">
                     <h2>Make it Yourself</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem fuga cum esse harum commodi delectus et ad, quidem temporibus nostrum facere cupiditate omnis, consequuntur maiores error. Eligendi nihil error et. Dolorum soluta rerum iusto aspernatur consequuntur aliquid, suscipit necessitatibus. Corporis libero repellat nihil dolores architecto maxime nemo, provident eos vero voluptatum iste asperiores aspernatur fugiat tempora iusto qui cumque nesciunt quas fuga. Ratione quidem culpa dignissimos consequatur libero laborum aliquid eveniet nulla, doloremque, earum nostrum quia, qui fugiat minus unde. Ducimus recusandae dolores sunt aliquid ullam rerum officiis dicta ex aliquam. Aliquid ad blanditiis sit quidem fugit, totam saepe necessitatibus provident excepturi deserunt exercitationem nulla explicabo libero molestias fuga. Ipsa veniam obcaecati repellat laboriosam excepturi rerum vitae pariatur accusantium sequi? Ipsam labore rerum quod atque cum laudantium sit ad ab, dolor quas placeat harum, incidunt excepturi deleniti ratione quidem eos iusto omnis qui illum est tenetur similique. Dolor cum possimus atque quo harum corrupti maiores consectetur assumenda unde ipsa quos beatae laboriosam dicta repellat omnis voluptate natus hic quis, repellendus vel. Sed quasi tempora hic laboriosam, obcaecati soluta consectetur error sapiente ea ut cumque in repellat esse porro ipsum temporibus earum voluptatibus eius molestias deleniti nostrum iure assumenda tenetur. Dignissimos.</p>
+                    <p>Please consider creating your own version of this project if you are looking for a fun challenge. My prototype is by no means perfect, but I've tried my best to compile everything needed to
+                    recreate the SpotifyWheel in the project GitHub. The 3D models, parts list, software, amd testing and development documentation are all listed there. If you feel like I've missed anything or if
+                    you have have any questions please feel free to reach out to me at <strong>ryan.1989@osu.edu</strong>.
+                    </p>
                     <details name="example" open>
                         <summary role="button" class="primary outline">Helpful Links</summary>
                         <ul>
