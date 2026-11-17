@@ -35,18 +35,18 @@
                 <section id="how-it-works">
                     <h2>How It Works</h2>
                     <p>
-                        The main concept is simple: a stationary wall mounted display with an outer enclosure that spins while music plays. This seperates the build into 2 main components - the inner display and electonics, and the outer spinning encoder wheel.
+                        The main concept is simple: a stationary wall-mounted display with an outer enclosure that spins while music plays. This separates the build into two main components: the inner display and electronics, and the outer spinning encoder wheel.
                     </p>
                     <p>
-                        The application polls Spotify to detect if the associated account is playing music. If so it displays current information about the song playing, and starts the motor to spin along with the music.
-                        If the user resists the motor movement, the wheel will stop. This allows the user to turn the wheel to change the volume. After a short while the wheel will resume playing. The user can also pause, play,
+                        The application polls Spotify to detect whether the linked account is playing music. If it is, the display shows information about the current song, and the motor spins the wheel along with the music.
+                        If the user resists the motor, the wheel stops, letting them turn it by hand to change the volume. After a short pause, the wheel resumes spinning. The user can also pause, play,
                         skip, go back, and change the playback duration.
                     </p>
                     <p>
-                        Two SS41F Hall-effect sensors and a ring of magnets in the outer frame come together to form an encoder. This encoder has to be calibrated when the user turns on the device, and is capable of detecting relative speed and position.
+                        Two SS41F Hall-effect sensors and a ring of magnets in the outer frame form an encoder. The encoder is calibrated when the device starts up and can detect the wheel's relative speed and position.
                     </p>
-                    <p> The motor is driven through a DC N20 motor using a TB6612 motor driver. The motor frequency was tuned via PWM to reduce whine. N20s often come with encoders preinstalled, so you may be wondering why I installed the encoder system above. Well,
-                        DC motors only sense motion when the motor is on, which would prevent the ability to sense motion when the user spins the wheel manually.
+                    <p> The wheel is spun by an N20 DC motor through a TB6612 motor driver, with the PWM frequency tuned to reduce motor whine. N20s often come with encoders preinstalled, so you may be wondering why I built the encoder above. Well,
+                        a DC motor's built-in encoder only senses motion while the motor is on, which would make it impossible to detect the user spinning the wheel by hand.
                     </p>
                     <figure class="hero-media" style="margin-bottom: 1em">
                         <video controls muted loop playsinline style="aspect-ratio: 16/9;">
@@ -54,8 +54,8 @@
                         </video>
                         <figcaption>Motor Mechanics in Action</figcaption>
                     </figure>
-                    <p> The wheel is powered through 2 cords fed through the wall. One is a 12V input for the motor, the other is a 5V Usb-C cord to power the PI. Future creators could optimize this down to one single cord, but I didn't want to risk bricking my Raspberry Pi
-                        by overpowering it with 12V in the late stage of the project.
+                    <p> The wheel is powered by two cords fed through the wall: a 12V supply for the motor and a 5V USB-C cord for the Pi. Future creators could get this down to a single cord, but I didn't want to risk bricking another Raspberry Pi
+                        by overpowering it with 12V so late in the project.
                     </p>
                     </section>
                 <section id="build">
@@ -63,15 +63,15 @@
                     <p>This section provides a high-level overview of my design and build process. If you want a more in-depth look at the internals, please see the <a href="#software">Software</a> and <a href="#hardware">Hardware</a> sections.
                     </p>
                     <p>
-                        All 3D modelling was done by me, either in SolidWorks or Shapr3d (an IPad compatable software). Interfacing parts were connected with a press fit when possible, with a 0.2mm gap for print fault tolerance.
-                        This minimized the amount of assembly parts. This was not possible with electronics, where instead heat inserts were used to provide durable metal screw threads on the inner plates. It was imperative to keep
-                        all screw mates internal in order to achieve a cleanly finished product. <strong>All 3D models are available on the project GitHub.</strong>
+                        I did all of the 3D modeling myself, in either SolidWorks or Shapr3D (an iPad-compatible CAD app). Mating parts were press-fit wherever possible, with a 0.2 mm gap to tolerate print error.
+                        This kept the number of assembly parts down. Press fits weren't an option for the electronics, so I used heat-set inserts to give the inner plates durable metal screw threads. It was a priority to keep
+                        all screws internal for a clean finished product. <strong>All 3D models are available on the project GitHub.</strong>
                     </p>
                     <div class="grid split">
                         <p>
-                            Most of the iteration I had to do with the 3Dmodel was making room for wiring connections (not pictured in 3Dmodels). It was difficult to find minimal cords (i.e. no excess overhang on connectors) that could fit into the small internal 
-                            pocket. I opted for 90° cords when possible, and designed around them by providing negative space when it was not. On the right you can see one such cutout, where I couldnt find a minimal mini-HDMI cord and instead had to model around 
-                            the cord I could find. In another world I could have skipped this whole process by communicating between the display with I2C, SPI, or UART, but the display model I had access to did not provide interfaces for these forms of communication.
+                            Most of my iteration on the 3D model went into making room for wiring (not shown in the models). It was hard to find slim cords (i.e., no excess overhang on the connectors) that fit in the small internal
+                            pocket. I used 90° cords where possible, and where I couldn't, I designed negative space around the cord. On the right is one such cutout: I couldn't find a slim mini-HDMI cord, so I modeled around
+                            the one I had. In another world I could have skipped this whole process by talking to the display over I2C, SPI, or UART, but the display model I had access to didn't support any of those interfaces.
                         </p>
                         <article>
                             <figure class="gallery">
@@ -81,21 +81,21 @@
                         </article>
                     </div>
                     <p>
-                        I made many changes throughout the build process, some drastic and many small refinement. Here are a couple select changes:
+                        I made many changes throughout the build process: a few drastic, most small refinements. Here are some highlights:
                         <ul>
-                            <li>I swapped out a Raspberry Pi 5 for a Raspberry Pi Zero 2 W. More on this in <a href=#what-went-wrong">what went wrong</a>. This reduced my distance off the wall by 20mm as I was able to 
-                            fit the Pi alongside the motor instead of overtop. Although this was better for the physical design, it highly constained my compute (512 MB), forcing me to be more careful with my software design.</li>
-                            <li>Changing the locking modular outer casing (as seen in initial outer casing) to a simple press fit two piece design. This reduced printing hours, tolerance needs, and complexity where it was needed. I also swapped the top design to a more sleek spiral.</li>
-                            <li>Switching from a 1:1 bevel gear and pinion design to a 3:1 bevel gear. This reduced the risk of print errors with the small teeth on the outer gear, and minimized the amount of moving parts with the potential to fail.</li>
+                            <li>Swapping the Raspberry Pi 5 for a Raspberry Pi Zero 2 W (more on why in <a href="#what-went-wrong">What Went Wrong</a>). This cut 20 mm off the depth from the wall, since the Pi could sit
+                            alongside the motor instead of on top of it. The physical design was better for it, but it severely constrained my compute (512 MB of RAM), forcing me to be more careful with the software.</li>
+                            <li>Replacing the locking, modular outer casing (see <i>Initial outer casing</i> below) with a simple two-piece press-fit design. This cut print time, loosened tolerance requirements, and removed complexity where it wasn't needed. I also changed the top to a sleeker spiral.</li>
+                            <li>Switching from a 1:1 bevel gear and pinion design to a 3:1 bevel gear. This reduced the risk of print errors in the outer gear's small teeth and cut down the number of moving parts that could fail.</li>
                         </ul>
                     </p>
                     <p>
-                        After the build was finished, it was important to validate that the product was consistent. To do this, I implemented a sleep mode that enters the wheel into a low power mode after 30 minutes of no user input. 
-                        The wheel will wake back up when the user plays something on Spotify while on the same LAN as the Pi. This allowed me to leave the wheel running in the background of my day to day while monitoring for any bugs
-                        that presented themselves.
+                        Once the build was finished, I needed to make sure it ran reliably over time. To make that practical, I implemented a sleep mode that puts the wheel into a low-power state after 30 minutes without user input.
+                        It wakes back up when the user plays something on Spotify on the same LAN as the Pi. That let me leave the wheel running in the background of my day-to-day while I watched for any bugs
+                        that showed up.
                     </p>
                     <p>
-                        <i>Small Note: </i> This project is a continuation of an effort by a classmate of mine, Adam Rehan, and I, to recreate the fabled yet discontinued <a href = "https://en.wikipedia.org/wiki/Car_Thing" target="_blank">Spotify Car Thing</a> (don't listen to the wikipedia this thing has a cult following). An intitial 3D-model for our enclosure is included below.
+                        <i>Small note:</i> This project continues an effort by my classmate Adam Rehan and me to recreate the fabled, discontinued <a href = "https://en.wikipedia.org/wiki/Car_Thing" target="_blank">Spotify Car Thing</a> (don't listen to Wikipedia — this thing has a cult following). Our initial 3D model of the enclosure is included below, along with a few of my other early designs.
                     </p>
                     <article class="grid gallery">
                         <figure>
@@ -124,34 +124,34 @@
                 </section>
                 <section id = "software">
                     <h2>Software</h2>
-                    <p>Designing the software was, as it always is, a mix between trying to take advantage of the hardware while still recognizing the constraints of the project.
-                    For one I had this sweet display capable of quick refresh and vivid color, but I only had 512 MB of RAM from the Raspberry Pi to render visuals 
-                    on, not to mention running the backend system to connect to Spotify and control the wheel position. 
+                    <p>Designing the software was, as it always is, a balance between taking advantage of the hardware and respecting the constraints of the project.
+                    On one hand, I had this sweet display capable of fast refresh and vivid color; on the other, I only had the Pi's 512 MB of RAM to render visuals
+                    with, and that same RAM also had to run the backend that connects to Spotify and controls the wheel.
                     </p>
-                     <p>In order to best deal with this limitation, I decided to serve a statically rendered frontend
-                    instead of a live render. Prerendering drastically reduced the amount of RAM my application ate up, enabling me to use something a bit heavier for my framework - <strong>React</strong>.
-                    React was a fit perfect with the component-based system I intended to design and has the included benefit of a huge developer base that would make finding ideas for components easy.
+                     <p>To work within this limit, I decided to serve a statically rendered frontend
+                    instead of a live render. Prerendering drastically reduced how much RAM the application ate up, which let me use something a bit heavier for my framework: <strong>React</strong>.
+                    React was a perfect fit for the component-based system I intended to design, and it has the added benefit of a huge developer community, which made it easy to find ideas for components.
                     </p>
-                    <p>For the backend I used <strong>Flask in Python</strong>. Flask helps to create a lightweight application that the prebuilt frontend can run on.
-                    Flask also made it easy to add external API calls to Spotify through SpotiPy, which was the main function of the backend outside of the hardware.
-                    In this section I'll primarily discuss the API call logic and software components, if you'd like a better look at how I controlled the motor and surrounding wheel
-                    please see the <a href="#hardware">hardware section</a>.
+                    <p>For the backend I used <strong>Flask in Python</strong>. Flask makes for a lightweight server that hosts the prebuilt frontend.
+                    It also made it easy to call Spotify's API through Spotipy, which was the backend's main job outside of the hardware.
+                    In this section I'll focus on the API logic and software components. If you'd like a closer look at how I controlled the motor and the wheel around it,
+                    please see the <a href="#hardware">Hardware</a> section.
                     </p>
-                    <p> When considering what actions the user should be able to perform with the software, it became clear fast that <strong>the more features I added, the more that could (and would) break</strong>.
-                    Any process failing - API requests getting denied, cover art failing to render properly, swipe and user animations glitching or refusing outright - would break the seamless UX I was trying
-                    to create. For this reason I kept actions simple: the user should be able to swipe to change songs, start/stop playback, change the playback duration, and change the volume.
+                    <p> When deciding what actions the user should be able to perform, it quickly became clear that <strong>the more features I added, the more could (and would) break</strong>.
+                    Any failure (API requests getting denied, cover art not rendering properly, swipe animations glitching or not responding at all) would break the seamless UX I was trying
+                    to create. So I kept the actions simple: the user can swipe to change songs, start/stop playback, change the playback duration, and change the volume.
                     </p>
-                    <p>These operations defined what API routes I would need on the backend. <i>But before that</i>, in order to make any call to Spotify's API I needed to be authenticated. This surfaced an annoying reality,
-                    that being that Spotify's Authentication requires clicking by hand through a verification webpage, which would break the instant on/off seamless behavior I was looking for. To get around this
-                    the user will verify their device during startup (easiest over SSH), then cache their key in a local .env to save it for future reference.
+                    <p>These operations defined the API routes I'd need on the backend. <i>But first</i>, to make any call to Spotify's API, I needed to be authenticated. This surfaced an annoying reality:
+                    Spotify's authentication requires clicking through a verification webpage by hand, which would break the seamless, instant on/off behavior I was after. To get around this,
+                    the user verifies their device during startup (easiest over SSH), and their key is cached in a local .env for future use.
                     </p>
-                    <p>The API calls are routed through SpotiPy, a then a JSON response is returned to the frontend to give informative error responses. Notably there a couple nuances to the SpotiPy 
-                    logic to deal with playing in a headless state (i.e. your phone, tablet, or computer being the main playback device while the Raspberry Pi 'listens in') along with syncronizing the
-                    Wheel state with this primary device. This means polling Spotify to see if any changes have occured, with some extra sauce to avoid their rate limiter.
+                    <p>API calls are routed through Spotipy, and each route returns a JSON response to the frontend, with informative errors when something fails. Notably, there are a couple of nuances in the Spotipy
+                    logic for playing in a headless state (i.e., your phone, tablet, or computer is the playback device while the Raspberry Pi "listens in") and for synchronizing the
+                    wheel's state with that device. This means polling Spotify for changes, with some extra sauce to stay under their rate limit.
                     </p>
-                    <p> Finally, the Frontend logic calls these routes on user action to serve the current Spotify status. When fetching the current songs information, the frontend also stores the previous
-                        and next songs. This allows the user to swipe between songs without a loading delay, and creates the illusion that the spotifyWheel has the queue and history preloaded. Each album cover
-                        is displayed with a warped design to more aptly fit in the circular display, and the title and playback are displayed in a way mimicing Spotify's own car displays. 
+                    <p> Finally, the frontend calls these routes on user actions and to display the current Spotify status. When fetching the current song's information, the frontend also stores the previous
+                        and next songs. This lets the user swipe between songs without a loading delay and creates the illusion that the SpotifyWheel has the queue and history preloaded. Each album cover
+                        is warped to better fill the circular display, and the title and playback progress are laid out to mimic Spotify's own car displays.
                     </p>
                     <article class="grid gallery">
                         <figure>
@@ -167,9 +167,9 @@
                         <summary role="button" class="primary outline">Helpful Links</summary>
                         <ul>
                             <li><a href="https://github.com/ryan01989/spotifyWheel/blob/main/ARCHITECTURE.md" target="_blank">Architecture diagrams</a></li>
-                            <li><a href="https://github.com/ryan01989/spotifyWheel/blob/main/frontend/README.md" target="_blank">Frontend Read Me</a></li>
+                            <li><a href="https://github.com/ryan01989/spotifyWheel/blob/main/frontend/README.md" target="_blank">Frontend README</a></li>
                             <li><a href="https://flask.palletsprojects.com/en/stable/">Flask Documentation</a></li>
-                            <li><a href="https://spotipy.readthedocs.io/en/2.26.0/">SpotiPy Documentation</a></li>
+                            <li><a href="https://spotipy.readthedocs.io/en/2.26.0/">Spotipy Documentation</a></li>
                             <li><a href="https://developer.spotify.com/documentation/web-api">Spotify Web API Documentation</a></li>
                         </ul>
                     </details>
@@ -177,8 +177,8 @@
                 <section id = "hardware">
                     <h2>Hardware</h2>
                     <p>
-                        The hardware has two main components (other than the Pi Zero 2 W): A <a href="https://kcmicromotor.com/n20-motor-dimensions-specifications/" target="_blank">N20 DC motor</a> that spins the outer wheel, and 2 <a href="https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/ja/products/sensors/magnetic-sensors/bipolar-position-sensor-ics/common/documents/sps-siot-bipolar-digital-hall-effect-sensor-ic-installation-instructions-ss41-pk87881-6-en-ciid-50342.pdf" target="_blank">SS41F Bipolar Hall-effect</a>
-                        sensors tracking 16 Ø10x2 mm magnets nested inside the outer wheel. Below is the circuit schematic for the project.
+                        The hardware has two main components (other than the Pi Zero 2 W): an <a href="https://kcmicromotor.com/n20-motor-dimensions-specifications/" target="_blank">N20 DC motor</a> that spins the outer wheel, and two <a href="https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/ja/products/sensors/magnetic-sensors/bipolar-position-sensor-ics/common/documents/sps-siot-bipolar-digital-hall-effect-sensor-ic-installation-instructions-ss41-pk87881-6-en-ciid-50342.pdf" target="_blank">SS41F bipolar Hall-effect</a>
+                        sensors that track 16 Ø10×2 mm magnets nested inside the outer wheel. Below is the project's circuit schematic.
                     </p>
                     <article class="grid">
                         <figure>
@@ -188,10 +188,10 @@
                     </article>
                     <div class="grid split">
                         <p>
-                            The biggest concern when designing the hardware components was minimizing the distance the display stoof off the wall.
-                            This was an interesting Engineering problem as while worrying about how to spin the wheel in a reliable way I had to worry
-                            about supporting the display and enclosing the rest of the electronics in as tight a space as possible. Inititally I planned
-                            to have a motor on the center axis with support for the display coming through the middle of the motor as pictured to the right.
+                            The biggest concern when designing the hardware was minimizing how far the display stood off the wall.
+                            This was an interesting engineering problem: on top of spinning the wheel reliably, I had to support
+                            the display and enclose the rest of the electronics in as tight a space as possible. Initially I planned
+                            to put the motor on the center axis, with the display's support running through the middle of the motor, as pictured to the right.
                         </p>
                         <article>
                             <figure class="gallery">
@@ -200,43 +200,43 @@
                             </figure>
                         </article>
                     </div>
-                    <p>The issue with this design is finding the motor to support it. This requires something like a brushless DC motor with a hollow center,
-                            which are hard to come by and <strong>expensive</strong>. I did not have the budget to support this, but I suggest it for future creators
-                            as it simplifies the design and removes points for potential failure (no need for bevel gears). It also avoids the Back-EMF created by turning a geared DC motor manually,
-                            although this isn't a huge problem due to the size of the motor.
+                    <p>The issue with this design is finding a motor for it. It needs something like a hollow-shaft brushless DC motor,
+                            which is hard to come by and <strong>expensive</strong>. I didn't have the budget for one, but I'd suggest it to future creators,
+                            as it simplifies the design and removes potential points of failure (no need for bevel gears). It also avoids the back-EMF created by turning a geared DC motor by hand,
+                            although that isn't a huge problem with a motor this small.
                         </p>
-                    <p>To minimize space off the wall I ended up with an N20 motor mounted on the radial axis of the wheel. The motor connects to the outer wheel with a 3:1 bevel gear. 
-                        The motors output a maximum of 300 rpm, which means at a 3:1 ratio the outer wheel can spin at a maximium of 100 rpm (I usually leave it at 40 rpm, much lower than the limit).
-                        These little N20s produce a surprising amount of torque - 0.4 kg·cm - which is more than enough to spin the light PLA outer frame. Its important to ensure that the spin speed
-                        is well over the stall zone to prevent burning out the motor, I measured this to be around 35% of motor power (~4.2V), but its important you test this metric yourself.
-                        The gears were printed in SLA. SLA offers a higher degree of precision than PLA, it's also tougher and more durable. Its often more expensive if you dont have your own SLA printer,
-                        but its important in order to prevent wear on the gear teeth over heavy use.
+                    <p>To minimize the depth off the wall, I ended up mounting an N20 motor on the radial axis of the wheel, connected to the outer wheel through a 3:1 bevel gear.
+                        The motor outputs a maximum of 300 rpm, so at a 3:1 ratio the outer wheel can spin at up to 100 rpm (I usually leave it at 40 rpm, well under the limit).
+                        These little N20s produce a surprising amount of torque (0.4 kg·cm), which is more than enough to spin the light PLA outer frame. It's important to keep the spin speed
+                        well above the stall zone to avoid burning out the motor. I measured the stall zone at around 35% of motor power (~4.2V), but you should test this yourself.
+                        The gears were printed in resin on an SLA printer, which is more precise than FDM-printed PLA, as well as tougher and more durable. It's often more expensive if you don't have your own SLA printer,
+                        but it's worth it to prevent wear on the gear teeth over heavy use.
                     </p>
                     <p>
-                        The motor is driven through a TB6612. The TB6612 offered a couple advantages.
+                        The motor is driven by a TB6612 motor driver, which offered a few advantages:
                     </p>
                     <ul>
-                        <li>It matches the power ratings needed by N20s</li>
-                        <li>It supports 3.3V input (Raspberry Pi's native output)</li>
-                        <li>A seperate PWM pin to push frequency easily</li>
-                        <li>Its cheap and easy to find</li>
+                        <li>Its power ratings match what an N20 needs</li>
+                        <li>It accepts 3.3V logic (the Raspberry Pi's native GPIO level)</li>
+                        <li>It has a separate PWM pin, which makes it easy to set the PWM frequency</li>
+                        <li>It's cheap and easy to find</li>
                     </ul>
                     <p>
-                        Most helpful to my use case was that the TB6612 supports two channels, i.e. the board has logic for 2 motors at once. This comes in handy when you short one channel of the
-                        driver during initial testing (<a href="#shorting-my-motor-driver">hypothetically of course</a>). It also allows you to refine your PWM setting and hence motor frequency through the software, which makes it easy
+                        Most helpful for my use case was that the TB6612 has two channels, i.e., it can drive two motors at once. This comes in handy when you short one channel of the
+                        driver during initial testing (<a href="#shorting-my-motor-driver">hypothetically, of course</a>). That separate PWM pin also lets you tune the PWM frequency in software, which makes it easy
                         to reduce motor whine and create a quieter product.
                     </p>
                     <p>
-                        As previously mentioned, I needed to create an encoder independent of the motor as the motor will be turned off during volume change and thus the motor encoder can't be used.
-                        This is where the 2 SS41F Hall-effect sensors come in. SS41Fs are bipolar latches, meaning a south pole switches the output on and a north pole switches the output off.
-                        16 Ø10x2 mm magnets are equally dispersed (22.5 degrees apart) around the outerring, alternating poles. The distance between the sensors is 11.25 degrees, half the distance 
-                        between magnets. The sensors read in quadrature, which means one sensor trails the other by one quarter of a cycle (a cycle being N->S->N, corresponding to a 45 degree rotation).
-                        As there are 8 full cycles reading in quadrature gives 32 counts of rotation per revolution, which is more than enough for simple volume control and motion detection.
+                        As mentioned earlier, I needed an encoder independent of the motor: the motor is off while the user changes the volume, so its built-in encoder can't be used.
+                        This is where the two SS41F Hall-effect sensors come in. SS41Fs are bipolar latches: a south pole switches the output on, and a north pole switches it off.
+                        Sixteen Ø10×2 mm magnets are evenly spaced (22.5° apart) around the outer ring with alternating poles. The sensors sit 11.25° apart, half the spacing
+                        between magnets. They read in quadrature, meaning one sensor trails the other by a quarter of a cycle (a cycle being N→S→N, a 45° rotation).
+                        With 8 full cycles per revolution, quadrature gives 32 counts per revolution, which is more than enough for simple volume control and motion detection.
                     </p>
                     <p>
-                        It is important that the Hall-effect sensors are close enough to the magnets to be triggered by their magnetic field. Using N42 Ø10x2 mm magnets, the strength of the field is over the detectable
-                        threshold up to ~11 mm, but its better to be well below that cutoff. The sensors are about 8.48 mm away from the face of the magnets, ensuring that each magnet is detected. This prevents skipping a 
-                        cycle, causing an incorrect measurement of rotation. Below is a visualization sketch of the encoder wheel.
+                        The Hall-effect sensors need to be close enough to the magnets to be triggered by their field. With N42 Ø10×2 mm magnets, the field stays above the sensors' detection
+                        threshold out to ~11 mm, but it's better to stay well inside that cutoff. The sensors sit about 8.5 mm from the face of the magnets, so every magnet is detected. A missed magnet would skip a
+                        cycle and throw off the rotation count. Below is a sketch of the encoder wheel.
                     </p>
                     <article class="grid">
                         <figure>
@@ -244,8 +244,8 @@
                             <figcaption>Encoder Ring Sketch</figcaption>
                         </figure>
                     </article>
-                    <p>Everything was soldered by hand, which I would not recommend for future creators. This was meant to be a prototype and as such creating a PCB didn't seem in my best interest. I wanted to preserve
-                        the ability to modify the design as I went, I figured I would realize some of my initial assumptions didnt hold and that I would have to make changes. This made the wiring harder and messy (as seen below).
+                    <p>Everything was soldered by hand, which I wouldn't recommend to future creators. This was meant to be a prototype, so designing a PCB didn't seem worth it. I wanted to keep
+                        the ability to modify the design as I went, since I figured some of my initial assumptions wouldn't hold and I'd have to make changes. The trade-off was harder, messier wiring (as seen below).
                         It works for my use case, but it isn't a scalable product as is. 
                     </p>
                     <article class="grid gallery">
@@ -270,26 +270,26 @@
                 <section id="what-went-wrong">
                     <h2>What Went Wrong</h2>
                     <p>
-                        As with any hobby project, plenty of mistakes had to happen before a working product was possible. Here are a couple,
-                        both to illustrate that development is an imperfect process and I am an imperfect creator.
+                        As with any hobby project, plenty of mistakes happened on the way to a working product. Here are a few, to show that
+                        development is an imperfect process and I am an imperfect creator.
                     </p>
                     <p>
-                        While I was initially working with a Raspberry Pi 5, I ended up bricking the entire computer during an initial motor test
-                        by overloading a GPIO pin with 12V. This was an extremely discouraging loss as the price of a Pi 5 had tripled since I originally
-                        bought it. Buying a new one would've brought the budget of this project to an unreasonable amount, forcing me to pivot to something
-                        cheaper - the Raspberry Pi Zero 2 W. This allowed me to keep the same linux Ubuntu operating system in a more compact module. 
-                        I was initially hesitatnt to make this switch as I worried about the memory load being too much for the small module, but after optimizing
-                        the software to account for the new constraint it ended up being a good pivot. As mentioned earlier, it allowed me to slim down the space off
-                        the wall by about 20 mm as I could tuck the Pi on the same plane as the motor instead of on top of it.
+                        I started the project on a Raspberry Pi 5, but I ended up bricking the entire board during an early motor test
+                        by overloading a GPIO pin with 12V. It was an extremely discouraging loss: the price of a Pi 5 had tripled since I
+                        bought mine, and buying a new one would have pushed the project's budget to an unreasonable amount. That forced me to pivot to something
+                        cheaper: the Raspberry Pi Zero 2 W. This let me keep the same Linux Ubuntu operating system in a more compact module.
+                        I was hesitant to make the switch at first, worried the memory load would be too much for such a small board, but after optimizing
+                        the software for the new constraint, it turned out to be a good pivot. As mentioned earlier, it also slimmed the depth off
+                        the wall by about 20 mm, since I could tuck the Pi on the same plane as the motor instead of on top of it.
                     </p>
                     <div class="grid split">
                         <p>
-                        The rest all came from getting trying to get the mechanics working. As these faults all happened during the same stage I like to think of this
-                        part of the project as the <strong>"no good very bad not fun"</strong> period. First, when trying to fine tune the start and stop mechanics I snapped the smaller
-                        bevel gear in half. This was clumsy of me, I was jerking the wheel with rapid start and stops which turned out to be too much for the poor gear.
-                        Sadly replacing this part was not as simple as printing another like some of the other components as I had the bevel gears specially printed in SLA. I no longer had
-                        access to the SLA printer I had originally used and was forced to get the replacement shipped to me (which took 2 weeks!). A bit impatiently I considered replacing 
-                        the gear with a PLA variant, even so far as I printed one out, but I decided not to use it as it risked breaking even more components.
+                        The rest came from trying to get the mechanics working. Since these faults all happened during the same stretch, I like to think of this
+                        part of the project as the <strong>"no good, very bad, not fun"</strong> period. First, while fine-tuning the start and stop mechanics, I snapped the smaller
+                        bevel gear in half. That was clumsy of me: I was jerking the wheel with rapid starts and stops, which turned out to be too much for the poor gear.
+                        Sadly, replacing it wasn't as simple as reprinting it like some of the other components, because I'd had the bevel gears specially printed in SLA. I no longer had
+                        access to the SLA printer I'd originally used, so I had to get a replacement shipped to me (which took two weeks!). A bit impatiently, I considered swapping in
+                        a PLA version and even went as far as printing one, but I decided not to use it since it risked breaking even more components.
                         </p>
                         <article>
                             <figure class="gallery">
@@ -300,10 +300,10 @@
                     </div>
                     <div class="grid split">
                         <p>
-                            Next was the motor driver. During the same short that fried the Raspberry Pi 5 I shorted the TB6612 as well. Testing with a multimeter reavealed
-                            that the internal logic was being bypassed for a path of near 0 resistance: the driver was fried too. Luckily for me the TB6612 supports 2 motor inputs,
-                            A and B, as seen on the right. Although A was fried, testing revealed that B was still intact. I was able to successfully hotswap the inputs to the other 
-                            channel, but not without the worry of having to buy another driver first.
+                            Next was the motor driver. The same short that fried the Raspberry Pi 5 took out the TB6612 as well. Testing with a multimeter revealed
+                            that the internal logic was being bypassed by a near-zero-resistance path: the driver was fried too. Luckily for me, the TB6612 has two motor channels,
+                            A and B, as seen on the right. Although A was fried, testing showed that B was still intact, so I was able to move the wiring over to the other
+                            channel, though not before worrying that I'd have to buy another driver.
                         </p>
                         <article>
                             <figure class="gallery">
@@ -313,23 +313,23 @@
                         </article>
                     </div>
                     <p>
-                        Everything great comes in threes, so I should have expected the last mechanical failure. When the N20s stall too long they overheat and burn out. During stress testing
-                        I let the Wheel run continously while I went to class, and low and behold I came back to a stalled, burned out motor. I'm not proud to admit I also burned a second motor something similar.
-                        To prevent this from happening in the future I added a failsafe in the software where if the motor has been turned on for more than 3 seconds without any detected encoder movement 
-                        the motor stops immediately. So far this has solved the burn out problem.
+                        Everything great comes in threes, so I should have seen the last mechanical failure coming. When an N20 stalls for too long, it overheats and burns out. During stress testing
+                        I left the wheel running continuously while I went to class, and lo and behold, I came back to a stalled, burned-out motor. I'm not proud to admit I burned out a second motor in a similar way.
+                        To prevent this from happening again, I added a software failsafe: if the motor has been on for more than 3 seconds without any detected encoder movement,
+                        it stops immediately. So far this has solved the burnout problem.
                     </p>
                 </section>
                 <section id="make-it-yourself">
-                    <h2>Make it Yourself</h2>
-                    <p>Please consider creating your own version of this project if you are looking for a fun challenge. My prototype is by no means perfect, but I've tried my best to compile everything needed to
-                    recreate the SpotifyWheel in the project GitHub. The 3D models, parts list, software, amd testing and development documentation are all listed there. If you feel like I've missed anything or if
-                    you have have any questions please feel free to reach out to me at <strong>ryan.1989@osu.edu</strong>.
+                    <h2>Make It Yourself</h2>
+                    <p>If you're looking for a fun challenge, please consider building your own version of this project. My prototype is by no means perfect, but I've done my best to compile everything needed to
+                    recreate the SpotifyWheel in the project GitHub. The 3D models, parts list, software, and testing and development documentation are all there. If you feel I've missed anything or
+                    you have any questions, please feel free to reach out to me at <strong>ryan.1989@osu.edu</strong>.
                     </p>
                     <details name="example" open>
                         <summary role="button" class="primary outline">Helpful Links</summary>
                         <ul>
                             <li><a href="https://github.com/ryan01989/spotifyWheel#readme" target="_blank">Setup &amp; build instructions</a></li>
-                            <li><a href="https://github.com/ryan01989/spotifyWheel/blob/main/deploy/README.md" target="_blank">Deployment Instuctions</a></li>
+                            <li><a href="https://github.com/ryan01989/spotifyWheel/blob/main/deploy/README.md" target="_blank">Deployment Instructions</a></li>
                         </ul>
                     </details>
                     
@@ -342,7 +342,7 @@
                     <p class="toc-title">On this page</p>
                     <ul>
                         <li><a href="#see-it-in-action">See it in Action</a></li>
-                        <li><a href="#how-it-works">How it works</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
                         <li><a href="#build">Build Process</a></li>
                         <li><a href="#software">Software</a></li>
                         <li><a href="#hardware">Hardware</a></li>
