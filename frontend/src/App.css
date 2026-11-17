@@ -93,7 +93,7 @@
     border-radius: 50%;
     object-fit: cover;
     opacity: var(--image-opacity-background);
-    animation: spin var(--spin-duration, 3s) linear infinite;
+    animation: spin var(--spin-duration, 3s) linear infinite reverse;
   }
   .switch {
     width: var(--image-diameter-switch);
