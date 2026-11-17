@@ -40,8 +40,8 @@ DEVICE_SYNC_HOLD_SEC = float(os.getenv("VOLUME_DEVICE_SYNC_HOLD_SEC", 6.0))
 
 # Stall: the motor has been told to spin but the wheel hasn't left the halt
 # deadzone in this long. Stop and retry.
-STALL_SEC = float(os.getenv("MOTOR_STALL_SEC", 1.5))
-STALL_RETRY_SEC = float(os.getenv("MOTOR_STALL_RETRY_SEC", 10.0))
+STALL_SEC = float(os.getenv("MOTOR_STALL_SEC", 3.0))
+STALL_RETRY_SEC = float(os.getenv("MOTOR_STALL_RETRY_SEC", 7.0))
 
 # Pushes to the volume listener go out on their own thread, coalesced to the
 # latest value, at most one per PUSH_INTERVAL_SEC.

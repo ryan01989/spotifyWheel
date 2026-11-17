@@ -17,6 +17,8 @@ __Note:__ For this list I linked an Amazon listing where possible as it will lik
 | Micro-USB to USB-C Cable (x2) | [Adafruit](https://www.adafruit.com/product/3878?gad_source=1&gad_campaignid=23986111167&gbraid=0AAAAADx9JvQKtYewGyy__LkhT805h_zoK&gclid=CjwKCAjwgJHXBhBGEiwAHohJq-uzfUzL_1DNoOsHSKWOhJZ41YsgHzmwHrEgpLM5zfx5Dk7J3PFkTRoCIw0QAvD_BwE) |
 | USB-C 180 Degree Adapter | [Amazon](https://www.amazon.com/dp/B0BLMTGX8H?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_2) |
 
+Also included in `/electronics` are the KiCad Schematics.
+
 ### A note on provided 3D Models
 The 3d model for each part is provided in three formats: 3MF, STEP, and STL. If
 you plan to print directly, I recommend 3MF. As a more universal format I've

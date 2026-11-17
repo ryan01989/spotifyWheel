@@ -48,6 +48,12 @@
                     <p> The motor is driven through a DC N20 motor using a TB6612 motor driver. The motor frequency was tuned via PWM to reduce whine. N20s often come with encoders preinstalled, so you may be wondering why I installed the encoder system above. Well,
                         DC motors only sense motion when the motor is on, which would prevent the ability to sense motion when the user spins the wheel manually.
                     </p>
+                    <figure class="hero-media" style="margin-bottom: 1em">
+                        <video controls muted loop playsinline style="aspect-ratio: 16/9;">
+                            <source src="media/demos/Spinning_Wheel_16x9.mp4" type="video/mp4">
+                        </video>
+                        <figcaption>Motor Mechanics in Action</figcaption>
+                    </figure>
                     <p> The wheel is powered through 2 cords fed through the wall. One is a 12V input for the motor, the other is a 5V Usb-C cord to power the PI. Future creators could optimize this down to one single cord, but I didn't want to risk bricking my Raspberry Pi
                         by overpowering it with 12V in the late stage of the project.
                     </p>
@@ -171,9 +177,15 @@
                 <section id = "hardware">
                     <h2>Hardware</h2>
                     <p>
-                        The hardware has two main components: A <a href="https://kcmicromotor.com/n20-motor-dimensions-specifications/" target="_blank">N20 DC motor</a> that spins the outer wheel, and 2 <a href="https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/ja/products/sensors/magnetic-sensors/bipolar-position-sensor-ics/common/documents/sps-siot-bipolar-digital-hall-effect-sensor-ic-installation-instructions-ss41-pk87881-6-en-ciid-50342.pdf" target="_blank">SS41F Bipolar Hall-effect</a>
-                        sensors tracking 16 Ø10x2 mm magnets nested inside the outer wheel. 
+                        The hardware has two main components (other than the Pi Zero 2 W): A <a href="https://kcmicromotor.com/n20-motor-dimensions-specifications/" target="_blank">N20 DC motor</a> that spins the outer wheel, and 2 <a href="https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/siot/ja/products/sensors/magnetic-sensors/bipolar-position-sensor-ics/common/documents/sps-siot-bipolar-digital-hall-effect-sensor-ic-installation-instructions-ss41-pk87881-6-en-ciid-50342.pdf" target="_blank">SS41F Bipolar Hall-effect</a>
+                        sensors tracking 16 Ø10x2 mm magnets nested inside the outer wheel. Below is the circuit schematic for the project.
                     </p>
+                    <article class="grid">
+                        <figure>
+                            <img src="media/progress/KiCad_Schematic.png" alt="KiCad Schematic" loading="lazy">
+                            <figcaption>Project KiCad Schematic</figcaption>
+                        </figure>
+                    </article>
                     <div class="grid split">
                         <p>
                             The biggest concern when designing the hardware components was minimizing the distance the display stoof off the wall.
@@ -202,16 +214,36 @@
                     </p>
                     <p>
                         The motor is driven through a TB6612. The TB6612 offered a couple advantages.
-                        <ul>
-                            <li>It matches the power ratings needed by N20s</li>
-                            <li>It supports 3.3V input (Raspberry Pi's native output)</li>
-                            <li>A seperate PWM pin to push frequency easily</li>
-                            <li>Its cheap and easy to find</li>
-                        </ul>
+                    </p>
+                    <ul>
+                        <li>It matches the power ratings needed by N20s</li>
+                        <li>It supports 3.3V input (Raspberry Pi's native output)</li>
+                        <li>A seperate PWM pin to push frequency easily</li>
+                        <li>Its cheap and easy to find</li>
+                    </ul>
+                    <p>
                         Most helpful to my use case was that the TB6612 supports two channels, i.e. the board has logic for 2 motors at once. This comes in handy when you short one channel of the
                         driver during initial testing (<a href="#shorting-my-motor-driver">hypothetically of course</a>). It also allows you to refine your PWM setting and hence motor frequency through the software, which makes it easy
                         to reduce motor whine and create a quieter product.
                     </p>
+                    <p>
+                        As previously mentioned, I needed to create an encoder independent of the motor as the motor will be turned off during volume change and thus the motor encoder can't be used.
+                        This is where the 2 SS41F Hall-effect sensors come in. SS41Fs are bipolar latches, meaning a south pole switches the output on and a north pole switches the output off.
+                        16 Ø10x2 mm magnets are equally dispersed (22.5 degrees apart) around the outerring, alternating poles. The distance between the sensors is 11.25 degrees, half the distance 
+                        between magnets. The sensors read in quadrature, which means one sensor trails the other by one quarter of a cycle (a cycle being N->S->N, corresponding to a 45 degree rotation).
+                        As there are 8 full cycles reading in quadrature gives 32 counts of rotation per revolution, which is more than enough for simple volume control and motion detection.
+                    </p>
+                    <p>
+                        It is important that the Hall-effect sensors are close enough to the magnets to be triggered by their magnetic field. Using N42 Ø10x2 mm magnets, the strength of the field is over the detectable
+                        threshold up to ~11 mm, but its better to be well below that cutoff. The sensors are about 8.48 mm away from the face of the magnets, ensuring that each magnet is detected. This prevents skipping a 
+                        cycle, causing an incorrect measurement of rotation. Below is a visualization sketch of the encoder wheel.
+                    </p>
+                    <article class="grid">
+                        <figure>
+                            <img src="media/progress/initial designs/Encoder_Ring_Sketch.png" alt="Encoder Ring Sketch" loading="lazy">
+                            <figcaption>Encoder Ring Sketch</figcaption>
+                        </figure>
+                    </article>
                     <p>Everything was soldered by hand, which I would not recommend for future creators. This was meant to be a prototype and as such creating a PCB didn't seem in my best interest. I wanted to preserve
                         the ability to modify the design as I went, I figured I would realize some of my initial assumptions didnt hold and that I would have to make changes. This made the wiring harder and messy (as seen below).
                         It works for my use case, but it isn't a scalable product as is. 
@@ -219,7 +251,7 @@
                     <article class="grid gallery">
                         <figure>
                             <img src="media/progress/motor_test_rasp_pi_5.jpeg" alt="Motor test running on a Raspberry Pi 5" loading="lazy">
-                            <figcaption>Motor test on a Pi 5</figcaption>
+                            <figcaption>Motor Test on a Pi 5</figcaption>
                         </figure>
                         <figure>
                             <img src="media/progress/motor_wiring.jpeg" alt="Motor driver wiring" loading="lazy">
