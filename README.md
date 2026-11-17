@@ -1,0 +1,2 @@
+See https://ryan01989.github.io/spotifyWheel for demos and information on the build.
+See the [backend readme](https://github.com/ryan01989/spotifyWheel/blob/main/backend/README.md), [frontend readme](https://github.com/ryan01989/spotifyWheel/blob/main/frontend/README.md), and [build specs](https://github.com/ryan01989/spotifyWheel/blob/main/build_specs/BUILD.md) for specific information about each section.
