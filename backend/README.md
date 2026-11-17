@@ -154,3 +154,9 @@ Systemd units and Pi setup: [../deploy/README.md](../deploy/README.md).
 Keep `backend/` and `frontend/` as siblings — Flask resolves the bundle as
 `backend/backend/../../../frontend/dist`, so deploying `backend/` alone
 breaks static serving.
+
+## License
+
+[MIT](../LICENSE) © 2026 Dylan Ryan.
+
+Not affiliated with or endorsed by Spotify. Spotify is a trademark of Spotify AB.

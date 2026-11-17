@@ -78,3 +78,9 @@ been rebuilt before the commit):
 ```sh
 sudo systemctl restart spotifywheel.service kiosk.service
 ```
+
+## License
+
+[MIT](../LICENSE) © 2026 Dylan Ryan.
+
+Not affiliated with or endorsed by Spotify. Spotify is a trademark of Spotify AB.

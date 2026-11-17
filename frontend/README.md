@@ -90,3 +90,9 @@ the old UI silently, with no error anywhere.
 ```sh
 npm run build
 ```
+
+## License
+
+[MIT](../LICENSE) © 2026 Dylan Ryan.
+
+Not affiliated with or endorsed by Spotify. Spotify is a trademark of Spotify AB.

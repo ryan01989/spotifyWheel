@@ -58,3 +58,9 @@ Tuning lives at the top of `exploded.js` (`GAP`, `LIFT_PX`, `SPY_LINE`, `NARROW`
 - All images are transparent WebP, cropped per part; `manifest.json` holds positions and the
   slide-to-assembled vector for every layer. Layers marked `_over` are small patches that keep overlaps
   correct while parts move.
+
+## License
+
+[MIT](../../../LICENSE) © 2026 Dylan Ryan.
+
+Not affiliated with or endorsed by Spotify. Spotify is a trademark of Spotify AB.

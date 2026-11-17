@@ -49,6 +49,21 @@ p {
     color: var(--pico-muted-color);
 }
 
+/* Demo videos: 2x2 grid */
+.demo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-bottom: var(--pico-spacing);
+}
+
+/* Small phones: one video per row */
+@media (max-width: 575px) {
+    .demo-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Phones: stack text above video */
 @media (max-width: 768px) {
     .hero {
@@ -196,6 +211,12 @@ img.zoomable {
     flex-wrap: wrap;
     gap: 0.5rem;
     color: var(--pico-muted-color);
+}
+
+/* License + trademark line sits on its own row under the links */
+.site-footer .footer-note {
+    flex-basis: 100%;
+    font-size: 0.75rem;
 }
 
 /* Phones: drop the side nav, content goes full width */
