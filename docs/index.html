@@ -32,6 +32,9 @@
     </head>
     <body>
         <header class="site-header">
+            <div class="container site-byline">
+                <p class="site-name">Dylan Ryan <span style="opacity:0.7; font-size: 0.8rem;">&middot CSE, Robotics</span></p>
+            </div>
             <div class="container hero">
                 <hgroup>
                     <h1>SpotifyWheel</h1>
@@ -44,12 +47,48 @@
                     </video>
                     <figcaption>Build process visualization (wiring not pictured)</figcaption>
                 </figure>
+                <span style="font-size: 0.8rem; opacity: 0.8;">3 min at a glance  &middot; 20 min full read</span>
             </div>
         </header>
 
 
         <div class="container layout">
             <main>
+                <section id = "at-a-glance">
+                    <details class="glance" open>
+                        <summary><h2>At a Glance</h2></summary>
+                        <figure class="hero-media" style="width:80%; justify-self: center;">
+                            <video controls muted loop playsinline autoplay>
+                                <source src="media/demos/full_demo.mp4" type="video/mp4">
+                            </video>
+                            <figcaption>Demo of startup and user actions</figcaption>
+                        </figure>
+                        <br>
+                        <p>
+                            SpotifyWheel is a remote Spotify controller that mimics a record player. It pairs a modern 720×720 circular display with a physical spinning wheel driven by an N20 DC motor and a TB6612 motor driver.
+                            The application runs on a Raspberry Pi Zero 2 W, chosen for its ability to run a full operating system, its tiny size, and its ability to interface with hardware.
+                        </p>
+                        <p>
+                            The biggest tradeoff in software was trying to fully harness the display's capabilities within the constraint of the Pi's 512 MB of RAM.
+                            The tech stack is a Flask backend in Python and a prebuilt React frontend. Flask allows for easy communication and authentication with Spotify's API through Spotipy while taking up minimal memory. React was chosen to take
+                            advantage of its large developer base for modern visualizations, its fast interactive experience, and its component-style architecture. React's tooling uses a lot of memory, so the frontend is prebuilt before being served by the backend
+                            to reduce load.
+                        </p>
+                        <p>
+                            For hardware, the wheel includes an N20 motor to spin the outer wheel, a driver for it, and a handbuilt encoder. The encoder uses two SS41F hall-effect sensors and a ring of 16 magnets around the outer wheel. An encoder on the
+                            motor could have been used, but in practice it was imprecise when the motor was turned off (volume control) because of gear backlash. The TB6612 driver was chosen because it allows direct control of the PWM frequency,
+                            which was used to reduce motor whine. The N20 motor is mounted facing radially outward and meshes with 3:1 bevel gears. The motor outputs a maximum of 300 RPM, so the outer wheel can spin at up to 100 RPM (in practice I leave it at around 30 RPM).
+                        </p>
+                        <p>
+                            Engineering design is invariably iterative, and I learned best by making mistakes early and learning from them quickly. At the start I was using a Raspberry Pi 5, but I was forced to pivot after it got fried during a motor test. This ended up being a net benefit,
+                            as the Pi Zero 2 W's smaller size allowed me to nest it beside the motor instead of on top of it, reducing the height off the wall by 20 mm. I also broke, well, just about everything: gears, motor drivers, motors, the whole lot. Adapting to each day's challenges
+                            became natural over time, whether that meant replacing parts or fixing them myself.
+                        </p>
+                        <p>
+                            More details on the project, including code, 3D models, a parts list, and further documentation, are available on my <a href="https://github.com/ryan01989/spotifyWheel" target="_blank">GitHub</a>.
+                        </p>
+                    </details>
+                </section>
                 <section id = "see-it-in-action">
                     <h2>See it in Action</h2>
                     <div class="demo-grid">
@@ -117,7 +156,7 @@
                     </p>
                     <div class="grid split">
                         <p>
-                            Most of my iteration on the 3D model went into making room for wiring (not shown in the models). It was hard to find slim cords (i.e., no excess overhang on the connectors) that fit in the small internal
+                            Harnessing integration was a key area of iteration. It was hard to find slim cords (i.e., no excess overhang on the connectors) that fit in the small internal
                             pocket. I used 90° cords where possible, and where I couldn't, I designed negative space around the cord. The image shows one such cutout: I couldn't find a slim mini-HDMI cord, so I modeled around
                             the one I had. In another world I could have skipped this whole process by talking to the display over DSI, but the Raspberry Pi doesn't support this interface types.
                         </p>
@@ -266,7 +305,7 @@
                             as it simplifies the design and removes potential points of failure (no need for bevel gears). It also avoids the back-EMF created by turning a geared DC motor by hand,
                             although that isn't a huge problem with a motor this small.
                         </p>
-                    <p>To minimize the depth off the wall, I ended up mounting an N20 motor on the radial axis of the wheel, connected to the outer wheel through a 3:1 bevel gear.
+                    <p>To minimize the depth off the wall, I opted to mount an N20 motor on the radial axis of the wheel, connected to the outer wheel through a 3:1 bevel gear.
                         The motor outputs a maximum of 300 rpm, so at a 3:1 ratio the outer wheel can spin at up to 100 rpm (I usually leave it around 20 rpm, well under the limit).
                         These little N20s produce a surprising amount of torque (0.4 kg·cm), which is more than enough to spin the light PLA outer frame. It's important to keep the spin speed
                         well above the stall zone to avoid burning out the motor. I measured the stall zone at around 35% of motor power (~4.2V), but you should test this yourself.
@@ -334,7 +373,7 @@
                 <section id="what-went-wrong">
                     <h2>What Went Wrong</h2>
                     <p>
-                        As with any hobby project, plenty of mistakes happened on the way to a working product. Here are a few, to show that
+                        Engineering design is invariably iterative, and I learned best by making mistakes early and learning quickly. Here are a few, to show that
                         development is an imperfect process and I am an imperfect creator.
                     </p>
                     <p>
@@ -404,6 +443,9 @@
             <aside class="toc">
                 <nav aria-label="On this page">
                     <p class="toc-title">On this page</p>
+                    <ul class="toc-glance">
+                        <li><a href="#at-a-glance">At a Glance</a></li>
+                    </ul>
                     <ul>
                         <li><a href="#see-it-in-action">See it in Action</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
@@ -436,17 +478,58 @@
 
         <script src="media/exploded/exploded.js" defer></script>
         <script>
-            // Highlight the nav link for whichever section is on screen
+            // Highlight the nav link for whichever section is on screen.
+            // Current = the last section whose top has passed 35% of the
+            // viewport (same line as the exploded view in exploded.js). At the
+            // bottom of the page the last section wins, since short final
+            // sections can never scroll up to that line.
             const links = document.querySelectorAll(".toc a");
-            const observer = new IntersectionObserver((entries) => {
-                for (const entry of entries) {
-                    if (!entry.isIntersecting) continue;
-                    links.forEach((link) => {
-                        link.classList.toggle("active", link.hash === "#" + entry.target.id);
-                    });
+            const sections = [...document.querySelectorAll("main section[id]")];
+            const SPY_LINE = 0.35;
+
+            function setActive(id) {
+                links.forEach((link) => link.classList.toggle("active", link.hash === "#" + id));
+            }
+
+            function spy() {
+                const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+                if (atBottom) return setActive(sections[sections.length - 1].id);
+                const line = window.innerHeight * SPY_LINE;
+                let current = sections[0];
+                for (const s of sections) {
+                    if (s.getBoundingClientRect().top <= line) current = s;
                 }
-            }, { rootMargin: "0px 0px -70% 0px" });
-            document.querySelectorAll("main section[id]").forEach((s) => observer.observe(s));
+                setActive(current.id);
+            }
+
+            // A nav click highlights its target right away and holds it while the
+            // smooth scroll runs, so the notch doesn't flicker through the sections
+            // in between or land on a neighbor. The next scroll after that resumes spying.
+            let clickHold = false, settleTimer = 0;
+            function settleSoon() {
+                clearTimeout(settleTimer);
+                settleTimer = setTimeout(() => { clickHold = false; }, 150);
+            }
+            links.forEach((link) => link.addEventListener("click", () => {
+                // Jumping to a collapsed section opens it first
+                const target = document.getElementById(link.hash.slice(1));
+                const details = target && target.querySelector(":scope > details");
+                if (details) details.open = true;
+                clickHold = true;
+                setActive(link.hash.slice(1));
+                settleSoon();
+            }));
+
+            let ticking = false;
+            window.addEventListener("scroll", () => {
+                if (clickHold) return settleSoon();
+                if (!ticking) {
+                    ticking = true;
+                    requestAnimationFrame(() => { ticking = false; spy(); });
+                }
+            }, { passive: true });
+            window.addEventListener("resize", spy);
+            spy();
 
             // Photos: click opens the full image in a new tab (hover zoom is in style.css)
             document.querySelectorAll("main img").forEach((img) => {
